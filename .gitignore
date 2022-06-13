@@ -2,6 +2,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all,java,intellij+iml,intellij,git,maven,node,react,kotlin
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,java,intellij+iml,intellij,git,maven,node,react,kotlin
 
+/src/main/resources/static/js/react
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
@@ -33,6 +35,42 @@
 
 # Generated files
 .idea/**/contentModel.xml
+
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
