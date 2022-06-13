@@ -6,7 +6,7 @@ module.exports = {
     watch: true,
     output: {
         // path: path.join(__dirname, '/dist'),
-        path: "I:/Trainee/date4u/src/main/resources/static/js/",
+        path: "I:/Trainee/date4u/src/main/resources/static/js/react",
         filename: 'bundle.js'
     },
     // webpack 5 comes with devServer which loads in development mode
