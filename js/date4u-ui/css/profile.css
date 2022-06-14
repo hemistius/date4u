@@ -1,0 +1,12 @@
+img {
+    /*max-width: max-content !important;*/
+}
+
+div.form-outline input, div.form-outline textarea {
+    background: #20262e !important;
+}
+
+div.form-outline label {
+    color: white !important;
+}
+

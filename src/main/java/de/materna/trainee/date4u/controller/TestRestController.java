@@ -1,6 +1,7 @@
 package de.materna.trainee.date4u.controller;
 
 import de.materna.trainee.date4u.db.dto.UnicornDto;
+import de.materna.trainee.date4u.db.entities.Profile;
 import de.materna.trainee.date4u.db.services.UnicornService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/rest/test")
 public class TestRestController {
 
     private final UnicornService unicornService;
@@ -25,4 +26,10 @@ public class TestRestController {
     public List<UnicornDto> getAll() {
         return unicornService.findAll();
     }
+
+//    @GetMapping(path = "profile", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Profile getProfile() {
+//        return null;
+//    }
+
 }

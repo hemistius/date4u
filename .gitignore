@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,java,intellij+iml,intellij,git,maven,node,react,kotlin
 
 /src/main/resources/static/js/react
+/src/main/resources/static/img/profile
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
