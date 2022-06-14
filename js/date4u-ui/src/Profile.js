@@ -16,7 +16,7 @@ function Profile() {
     const loadProfile = async () => {
         const params = (new URL(document.location)).searchParams;
         const username = params.get("username")
-        const response = await axios.get(`/rest/profile/${username}`)
+        const response = await axios.get('/rest/profile', {params: {username: username}})
         setProfile(response.data)
     }
 
@@ -27,7 +27,6 @@ function Profile() {
                 <MDBCol>
                     {/*<MDBContainer>*/}
                     <MDBRow className='mb-3 mt-3'>
-                        {/*<img src="https://picsum.photos/200/300" width="200" height="300" className="noResize p-0"/>*/}
                         <MDBCarousel showControls fade interval={999999999}>
                             <MDBCarouselInner>
                                 {profile.photos.map((photo, idx) => (
@@ -35,9 +34,6 @@ function Profile() {
                                         <MDBCarouselElement src={"/img/profile/" + photo.name + ".jpg"} alt='...'/>
                                     </MDBCarouselItem>
                                 ))}
-                                {/*<MDBCarouselItem className='active'>*/}
-                                {/*    <MDBCarouselElement src='https://mdbootstrap.com/img/Photos/Slides/img%20(15).webp' alt='...'/>*/}
-                                {/*</MDBCarouselItem>*/}
                             </MDBCarouselInner>
                         </MDBCarousel>
                     </MDBRow>

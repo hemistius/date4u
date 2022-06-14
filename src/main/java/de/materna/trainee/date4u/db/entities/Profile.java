@@ -17,7 +17,9 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @ToString
-@NamedEntityGraph(name = "profile.all", includeAllAttributes = true)
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "profile.all", includeAllAttributes = true)
+})
 public class Profile {
 
     @Id
@@ -32,7 +34,7 @@ public class Profile {
     private String description;
     @Column(name = "lastseen")
     private LocalDateTime lastSeen;
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private Set<Photo> photos;
 
     @Override

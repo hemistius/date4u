@@ -3,12 +3,15 @@ import {MDBContainer, MDBNavbar, MDBNavbarBrand, MDBNavbarItem, MDBNavbarLink, M
 
 function Navbar() {
     return (
-        <MDBNavbar dark bgColor="dark">
+        <MDBNavbar dark bgColor="dark" expand='lg'>
             <MDBContainer fluid>
                     <MDBNavbarBrand>Date4U</MDBNavbarBrand>
                     <MDBNavbarNav>
                         <MDBNavbarItem>
                             <MDBNavbarLink href="/profile">Profil</MDBNavbarLink>
+                        </MDBNavbarItem>
+                        <MDBNavbarItem>
+                            <MDBNavbarLink href="/search">Suche</MDBNavbarLink>
                         </MDBNavbarItem>
                     </MDBNavbarNav>
             </MDBContainer>
