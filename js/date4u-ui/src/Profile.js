@@ -27,7 +27,7 @@ function Profile() {
                 <MDBCol>
                     {/*<MDBContainer>*/}
                     <MDBRow className='mb-3 mt-3'>
-                        <MDBCarousel showControls fade interval={999999999}>
+                        <MDBCarousel dark  showControls fade interval={999999999}>
                             <MDBCarouselInner>
                                 {profile.photos.map((photo, idx) => (
                                     <MDBCarouselItem key={photo.id} className={photo.profilePhoto ? 'active' : ''}>
@@ -38,7 +38,9 @@ function Profile() {
                         </MDBCarousel>
                     </MDBRow>
                     <MDBRow className='mb-3 text-light'>
-                        <MDBCol className="p-0">Nickname: {profile.nickname}</MDBCol>
+                        <MDBCol className="p-0">
+                            <MDBInput className='mb-4 text-light' placeholder="." disabled readonly label="Nickname" value={profile.nickname}/>
+                        </MDBCol>
                     </MDBRow>
                     <MDBRow className='mb-3'>
                         <MDBBtn floating><MDBIcon fas icon="thumbs-up"/></MDBBtn>

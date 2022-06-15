@@ -4,11 +4,15 @@ import de.materna.trainee.date4u.db.dto.UnicornDto;
 import de.materna.trainee.date4u.db.entities.Unicorn;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UnicornDtoMapper {
 
     UnicornDto toDto(Unicorn unicorn, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+
+    @Mapping( target = "profile", ignore = true)
+    UnicornDto toDtoSparse(Unicorn unicorn);
 
     @DoIgnore
     default UnicornDto toDto(Unicorn unicorn) {

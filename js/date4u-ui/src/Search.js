@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import {MDBBtn, MDBRipple, MDBCheckbox, MDBBtnGroup, MDBCol, MDBContainer, MDBListGroup, MDBListGroupItem, MDBRange, MDBRow, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBIcon} from 'mdb-react-ui-kit';
+import {MDBBtn, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, MDBCheckbox, MDBBtnGroup, MDBCol, MDBContainer, MDBListGroup, MDBListGroupItem, MDBRange, MDBRow, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBIcon} from 'mdb-react-ui-kit';
 import Navbar from "./Navbar";
 import "../css/profile.css"
 import "../css/search.css"
@@ -34,7 +34,6 @@ function Search() {
     const [profiles, setProfiles] = useState([])
 
     const minAgeRangeChanged = (e) => {
-        console.log(e.target.value)
         setMinAgeValue(e.target.value)
         setMaxAgeMin(Math.min(Number.parseInt(e.target.value) + 1, 99))
         maxAgeRange.current.dispatchEvent(new Event("input", {bubbles: true}))
@@ -56,6 +55,21 @@ function Search() {
     const maxLengthRangeChanged = (e) => {
         setMaxLengthValue(e.target.value)
         changeParam("maxLength", e.target.value)
+    }
+
+    const genderChecked = (e) => {
+        const checked = e.target.checked
+        switch (e.target.id) {
+            case 'male-check':
+                changeParam('male', checked);
+                break;
+            case 'female-check':
+                changeParam('female', checked);
+                break;
+            case 'diverse-check':
+                changeParam('diverse', checked);
+                break;
+        }
     }
 
     const changeParam = (key, value) => {
@@ -88,17 +102,39 @@ function Search() {
         if (params.has("maxLength")) {
             queryParams['maxLength'] = params.get("maxLength")
         }
+        let anyTrue = false
         if (params.has("male")) {
             queryParams['male'] = params.get("male")
+            if (params.get("male").toLowerCase() === 'true') {
+                anyTrue = true
+            }
+        } else {
+            queryParams['male'] = 'false'
         }
         if (params.has("female")) {
             queryParams['female'] = params.get("female")
+            if (params.get("female").toLowerCase() === 'true') {
+                anyTrue = true
+            }
+        } else {
+            queryParams['female'] = 'false'
         }
         if (params.has("diverse")) {
             queryParams['diverse'] = params.get("diverse")
+            if (params.get("diverse").toLowerCase() === 'true') {
+                anyTrue = true
+            }
+        } else {
+            queryParams['diverse'] = 'false'
         }
+        // console.log(anyTrue)
+        if (!anyTrue) {
+            delete queryParams.male
+            delete queryParams.female
+            delete queryParams.diverse
+        }
+        // console.log(Array.from(params.entries()))
 
-        console.log(queryParams)
         const response = await axios.get('/rest/profile/query', {params: queryParams})
         const data = response.data
         data.sort((a, b) => {
@@ -130,10 +166,28 @@ function Search() {
             setMaxLengthValue(Number.parseInt(params.get("maxLength")))
         }
         if (params.has("male")) {
+            const checked = (params.get("male").toLowerCase() === 'true');
+            if (checked) {
+                maleCheck.current.checked = true
+            } else {
+                maleCheck.current.checked = false
+            }
         }
         if (params.has("female")) {
+            const checked = (params.get("female").toLowerCase() === 'true');
+            if (checked) {
+                maleCheck.current.checked = true
+            } else {
+                maleCheck.current.checked = false
+            }
         }
         if (params.has("diverse")) {
+            const checked = (params.get("diverse").toLowerCase() === 'true');
+            if (checked) {
+                maleCheck.current.checked = true
+            } else {
+                maleCheck.current.checked = false
+            }
         }
         minLengthRange.current.dispatchEvent(new Event("input", {bubbles: true}))
         maxLengthRange.current.dispatchEvent(new Event("input", {bubbles: true}))
@@ -168,9 +222,9 @@ function Search() {
                 </MDBCol>
                 <MDBCol className="pt-4">
                     <MDBBtnGroup>
-                        <MDBCheckbox inputRef={maleCheck} name='btnCheck' btn id='male-check' wrapperTag='span' label='M'/>
-                        <MDBCheckbox inputRef={femaleCheck} name='btnCheck' btn id='female-check' wrapperClass='mx-2' wrapperTag='span' label='W'/>
-                        <MDBCheckbox inputRef={diverseCheck} name='btnCheck' btn id='diverse-check' wrapperTag='span' label='D'/>
+                        <MDBCheckbox inputRef={maleCheck} onClick={genderChecked} name='btnCheck' btn id='male-check' wrapperTag='span' label='M'/>
+                        <MDBCheckbox inputRef={femaleCheck} onClick={genderChecked} name='btnCheck' btn id='female-check' wrapperClass='mx-2' wrapperTag='span' label='W'/>
+                        <MDBCheckbox inputRef={diverseCheck} onClick={genderChecked} name='btnCheck' btn id='diverse-check' wrapperTag='span' label='D'/>
                     </MDBBtnGroup>
                 </MDBCol>
             </MDBRow>
@@ -181,7 +235,8 @@ function Search() {
             </MDBRow>
             <MDBRow className="mb-2">
                 <MDBCol>
-                    <h4 className="text-light">Treffer X-X (von {profiles.length})</h4>
+                    {/*<h4 className="text-light">Treffer X-X (von {profiles.length})</h4>*/}
+                    <h4 className="text-light">{profiles.length} Treffer</h4>
                 </MDBCol>
             </MDBRow>
             <MDBRow className="row-cols-xxl-auto">

@@ -14,7 +14,14 @@ import javax.persistence.*;
 @Setter
 @RequiredArgsConstructor
 @ToString
-@NamedEntityGraph(name = "unicorn.all", includeAllAttributes = true)
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "unicorn.all", includeAllAttributes = true),
+        @NamedEntityGraph(name = "unicorn.sparse", attributeNodes = {
+                @NamedAttributeNode("id"),
+                @NamedAttributeNode("email"),
+                @NamedAttributeNode("password")
+        })
+})
 public class Unicorn {
 
     @Id
