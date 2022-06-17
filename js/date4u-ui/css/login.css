@@ -1,0 +1,19 @@
+html, body, #mainLoginFlexContainer{
+    height: 100vh;
+}
+
+div.carousel-item > img {
+    border-top-left-radius: 3%;
+    border-bottom-left-radius: 3%;
+}
+
+.carousel, .carousel-item {
+    background-color: #212331;
+}
+
+#logoContainer {
+    width: 100%;
+    height: auto;
+}
+
+

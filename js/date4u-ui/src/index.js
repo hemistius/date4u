@@ -1,16 +1,17 @@
-import React from "react"
+import React, {Suspense} from "react"
 import ReactDom from "react-dom"
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import App from "./App"
-import Profile from "./Profile";
-import Search from "./Search";
-
 
 if (document.getElementById('app') != null) {
-    ReactDom.render(<App/>, document.getElementById('app'))
+    // ReactDom.render(<App/>, document.getElementById('app'))
 } else if (document.getElementById('profile') != null) {
-    ReactDom.render(<Profile/>, document.getElementById('profile'))
+    const Profile = React.lazy(() => import("./Profile"))
+    ReactDom.render(<Suspense fallback={<div></div>}><Profile/></Suspense>, document.getElementById('profile'))
 } else if (document.getElementById('search') != null) {
-    ReactDom.render(<Search/>, document.getElementById('search'))
+    const Search = React.lazy(() => import("./Search"))
+    ReactDom.render(<Suspense fallback={<div></div>}><Search/></Suspense>, document.getElementById('search'))
+} else if (document.getElementById('login') != null) {
+    const Login = React.lazy(() => import("./Login"))
+    ReactDom.render(<Suspense fallback={<div></div>}><Login/></Suspense>, document.getElementById('login'))
 }
 

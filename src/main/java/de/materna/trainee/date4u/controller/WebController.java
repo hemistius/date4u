@@ -1,5 +1,6 @@
 package de.materna.trainee.date4u.controller;
 
+import de.materna.trainee.date4u.db.dto.PhotoDto;
 import de.materna.trainee.date4u.db.dto.UnicornDto;
 import de.materna.trainee.date4u.db.services.ProfileService;
 import de.materna.trainee.date4u.db.services.UnicornService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Controller
 public class WebController {
@@ -26,9 +28,8 @@ public class WebController {
 
     @GetMapping("/profile")
     public String getProfile(@RequestParam Optional<String> username, Principal principal) {
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             Optional<UnicornDto> unicornByMail = unicornService.findUnicornByMail(principal.getName());
-//            return unicornByMail.map(unicornDto -> getProfile(Optional.of(unicornDto.getProfile().getNickname()), principal)).orElseThrow(Response404Exception::new);
             return unicornByMail.map(unicornDto -> "redirect:/profile?username=" + unicornDto.getProfile().getNickname()).orElseThrow(Response404Exception::new);
         }
         if (profileService.countByUsernameIgnoringCase(username.get()) <= 0) {
@@ -38,8 +39,29 @@ public class WebController {
         return "profile";
     }
 
+    @GetMapping("/")
+    public String getRoot() {
+        return "redirect:/search";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(){
+        return "login";
+    }
+
     @GetMapping("/search")
     public String getProfile() {
         return "search";
+    }
+
+    @GetMapping("/img/profile/current")
+    public String getCurrentProfilePic(Principal principal) {
+        Optional<UnicornDto> unicornByMail = unicornService.findUnicornByMail(principal.getName());
+        PhotoDto profilePhoto = unicornByMail.stream()
+                                             .flatMap(e -> e.getProfile().getPhotos().stream())
+                                             .filter(PhotoDto::isProfilePhoto)
+                                             .findFirst()
+                                             .orElseThrow(Response404Exception::new);
+        return "redirect:/img/profile/%s.jpg".formatted(profilePhoto.getName());
     }
 }

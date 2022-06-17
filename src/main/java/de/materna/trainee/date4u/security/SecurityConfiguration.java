@@ -13,25 +13,32 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-            .mvcMatchers("/rest/**", "/profile", "/search")
+            .mvcMatchers("/rest/**", "/profile", "/search", "/")
             .authenticated()
-            .mvcMatchers("/js/**", "/img/**")
+            .mvcMatchers("/js/**", "/img/login/**", "/img/logo/**")
+            .permitAll()
+            .mvcMatchers("/img/**")
             .authenticated()
             .anyRequest()
             .denyAll()
             .and()
             .formLogin()
-//                .loginPage("/login")
+            .loginPage("/login")
+            .loginProcessingUrl("/perform_login")
+            .defaultSuccessUrl("/search")
+            .permitAll()
             .and()
             .httpBasic()
             .and()
             .logout()
+            .logoutUrl("/perform_logout")
+            .logoutSuccessUrl("/login")
             .permitAll()
             .deleteCookies("JSESSIONID")
             .clearAuthentication(true)
             .invalidateHttpSession(true);
 
-//        http.cors().and().csrf().disable();
+        http.cors().and().csrf().disable();
         return http.build();
     }
 }

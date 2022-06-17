@@ -3,6 +3,7 @@ import {MDBBtn, MDBPagination, MDBPaginationItem, MDBPaginationLink, MDBRipple, 
 import Navbar from "./Navbar";
 import "../css/profile.css"
 import "../css/search.css"
+import "../css/background.css"
 import axios from "axios";
 
 const dateToAge = date => {
