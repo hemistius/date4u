@@ -11,8 +11,11 @@ public interface UnicornDtoMapper {
 
     UnicornDto toDto(Unicorn unicorn, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-    @Mapping( target = "profile", ignore = true)
+    @Mapping(target = "profile", ignore = true)
     UnicornDto toDtoSparse(Unicorn unicorn);
+
+    @Mapping(target = "password", ignore = true)
+    UnicornDto sanitize(UnicornDto unicorn);
 
     @DoIgnore
     default UnicornDto toDto(Unicorn unicorn) {

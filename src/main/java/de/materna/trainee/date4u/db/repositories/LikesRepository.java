@@ -11,5 +11,5 @@ public interface LikesRepository extends CrudRepository<Likes, LikesKey> {
 
     boolean existsByLikeeAndLiker(Profile likee, Profile liker);
 
-    Optional<Likes> findByLikeeAndAndLiker(Profile likee, Profile liker);
+    Optional<Likes> findByLikeeAndLiker(Profile likee, Profile liker);
 }

@@ -16,5 +16,8 @@ if (document.getElementById('app') != null) {
 } else if (document.getElementById('register') != null) {
     const Register = React.lazy(() => import("./Register"))
     ReactDom.render(<Suspense fallback={<div></div>}><Register/></Suspense>, document.getElementById('register'))
+} else if (document.getElementById('edit_profile') != null) {
+    const EditProfile = React.lazy(() => import("./EditProfile"))
+    ReactDom.render(<Suspense fallback={<div></div>}><EditProfile/></Suspense>, document.getElementById('edit_profile'))
 }
 

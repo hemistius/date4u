@@ -49,6 +49,11 @@ public class WebController {
         return "login";
     }
 
+    @GetMapping("/profile/edit")
+    public String editProfile() {
+        return "edit_profile";
+    }
+
     @GetMapping("/search")
     public String getProfile() {
         return "search";

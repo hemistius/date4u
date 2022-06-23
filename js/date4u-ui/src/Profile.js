@@ -9,10 +9,12 @@ function Profile() {
 
     const [profile, setProfile] = useState({photos: []})
     const [liked, setLiked] = useState(false)
+    const [ownProfile, setOwnProfile] = useState(false)
 
     useEffect(() => {
         loadProfile()
         loadLiked()
+        loadOwn()
     }, [])
 
     const loadProfile = async () => {
@@ -29,15 +31,28 @@ function Profile() {
         setLiked(response.data.liked)
     }
 
+    const loadOwn = async () => {
+        const params = (new URL(document.location)).searchParams;
+        const username = params.get("username")
+        const response = await axios.get("/rest/user/username")
+        setOwnProfile(response.data === username)
+    }
+
     const toggleLiked = async () => {
         const params = (new URL(document.location)).searchParams;
         const username = params.get("username")
         if (liked) {
             await axios.delete("/rest/like", {params: {username: username}})
         } else {
-            await axios.put("/rest/like", null,{params: {username: username}})
+            await axios.put("/rest/like", null, {params: {username: username}})
         }
         setLiked(!liked)
+    }
+
+    const redirectEdit = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        window.location.href = "/profile/edit";
     }
 
     return (<div>
@@ -61,10 +76,21 @@ function Profile() {
                             <MDBInput className='mb-4 text-light' placeholder="." disabled readonly label="Nickname" value={profile.nickname}/>
                         </MDBCol>
                     </MDBRow>
+                    <MDBRow>
+                        <MDBCol className="p-0">
+                            {ownProfile ? <MDBBtn color="secondary" onClick={redirectEdit} rounded block><MDBIcon fas icon="edit"/> Edit</MDBBtn> : ""}
+                        </MDBCol>
+                    </MDBRow>
                 </MDBCol>
                 <MDBCol size="9" className="mx-3">
                     <MDBRow className='mb-3 mt-3'>
-                        <h3 className="p-0 text-light">Profil von {profile.nickname} <MDBBtn onClick={toggleLiked} size="m" style={{backgroundColor: '#ec4a89'}} floating><MDBIcon size="lg" far={!liked} fas={liked} icon="heart"/></MDBBtn></h3>
+                        <h3 className="p-0 text-light">Profil von {profile.nickname}
+                            {!ownProfile ?
+                                <MDBBtn className="ms-2" onClick={toggleLiked} size="m" style={{backgroundColor: '#ec4a89'}} floating>
+                                    <MDBIcon size="lg" far={!liked} fas={liked} icon="heart"/>
+                                </MDBBtn>
+                                : ""}
+                        </h3>
                     </MDBRow>
                     <MDBRow>
                         <ProfileInfoForm profile={profile}/>

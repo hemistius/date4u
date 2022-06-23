@@ -33,7 +33,7 @@ public class LikesService {
         Optional<Profile> likee = profileRepository.findByNicknameIgnoreCase(likeeUsername);
         Optional<Profile> liker = profileRepository.findByNicknameIgnoreCase(likerUsername);
 
-        Optional<Likes> likes = likesRepository.findByLikeeAndAndLiker(
+        Optional<Likes> likes = likesRepository.findByLikeeAndLiker(
                 likee.orElseThrow(NoSuchElementException::new),
                 liker.orElseThrow(NoSuchElementException::new)
         );
@@ -46,7 +46,7 @@ public class LikesService {
         Optional<Profile> likee = profileRepository.findByNicknameIgnoreCase(likeeUsername);
         Optional<Profile> liker = profileRepository.findByNicknameIgnoreCase(likerUsername);
 
-        likesRepository.findByLikeeAndAndLiker(
+        likesRepository.findByLikeeAndLiker(
                 likee.orElseThrow(NoSuchElementException::new),
                 liker.orElseThrow(NoSuchElementException::new)
         ).ifPresent(likesRepository::delete);

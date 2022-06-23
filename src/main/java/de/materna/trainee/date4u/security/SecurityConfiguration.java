@@ -15,9 +15,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-            .mvcMatchers("/rest/unicorn/register", "/rest/photo/upload")
+            .mvcMatchers("/rest/unicorn/register", "/rest/photo/upload", "/favicon.ico")
             .permitAll()
-            .mvcMatchers("/rest/**", "/profile", "/search", "/")
+            .mvcMatchers("/rest/**", "/profile", "/search", "/", "/profile/edit")
             .authenticated()
             .mvcMatchers("/js/**", "/img/login/**", "/img/logo/**", "/register")
             .permitAll()
