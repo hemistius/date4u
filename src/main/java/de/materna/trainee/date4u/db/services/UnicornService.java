@@ -6,6 +6,7 @@ import de.materna.trainee.date4u.db.entities.Unicorn;
 import de.materna.trainee.date4u.db.repositories.UnicornRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +18,13 @@ public class UnicornService {
 
     private final UnicornRepository repository;
     private final UnicornDtoMapper dtoMapper;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public UnicornService(UnicornRepository unicornRepository, UnicornDtoMapper dtoMapper) {
+    public UnicornService(UnicornRepository unicornRepository, UnicornDtoMapper dtoMapper, PasswordEncoder encoder) {
         this.repository = unicornRepository;
         this.dtoMapper = dtoMapper;
+        this.encoder = encoder;
     }
 
     public List<UnicornDto> findAll() {
@@ -37,5 +40,14 @@ public class UnicornService {
 
     public Optional<UnicornDto> findUnicornByMail(String email) {
         return repository.findUnicornByEmailIgnoreCase(email).map(dtoMapper::toDto);
+    }
+
+    public UnicornDto createUnicorn(UnicornDto unicornDto) {
+        Unicorn unicorn = dtoMapper.fromDto(unicornDto);
+        if (unicorn.getId() != null) {
+            throw new IllegalArgumentException("Id should not be set");
+        }
+        unicorn.setPassword(encoder.encode(unicorn.getPassword()));
+        return dtoMapper.toDto(repository.save(unicorn));
     }
 }

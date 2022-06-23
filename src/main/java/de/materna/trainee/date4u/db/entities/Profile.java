@@ -34,7 +34,7 @@ public class Profile {
     private String description;
     @Column(name = "lastseen")
     private LocalDateTime lastSeen;
-    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<Photo> photos;
 
     @Override

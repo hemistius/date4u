@@ -1,37 +1,16 @@
-// <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
-// <head>
-//     <title tiles:fragment="title">Messages : Create</title>
-// </head>
-// <body>
-// <div tiles:fragment="content">
-//     <form name="f" th:action="@{/perform_login}" method="post">
-//         <fieldset>
-//             <legend>Please Login</legend>
-//             <div th:if="${param.error}" className="alert alert-error">
-//                 Invalid username and password.
-//             </div>
-//             <div th:if="${param.logout}" className="alert alert-success">
-//                 You have been logged out.
-//             </div>
-//             <label htmlFor="username">Username</label>
-//             <input type="text" id="username" name="username"/>
-//             <label htmlFor="password">Password</label>
-//             <input type="password" id="password" name="password"/>
-//             <div className="form-actions">
-//                 <button type="submit" className="btn">Log in</button>
-//             </div>
-//         </fieldset>
-//     </form>
-// </div>
-// </body>
-// </html>
-
 import React from "react";
-import {MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn, MDBCardImage, MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBCarouselElement, MDBCarouselCaption,} from 'mdb-react-ui-kit';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCarousel, MDBCarouselElement, MDBCarouselInner, MDBCarouselItem, MDBCol, MDBInput, MDBRow,} from 'mdb-react-ui-kit';
 import "../css/login.css"
 import "../css/background.css"
 
 function Login(props) {
+
+    const redirectRegister = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        window.location.href = "/register";
+    }
+
     return (<div className="d-flex justify-content-center  flex-wrap" id="mainLoginFlexContainer">
 
         <div className='flex-row mt-5'>
@@ -63,7 +42,7 @@ function Login(props) {
                                     <MDBBtn type='submit' className="me-2" rounded>
                                         Einloggen
                                     </MDBBtn>
-                                    <MDBBtn rounded color="success">
+                                    <MDBBtn rounded color="success" onClick={redirectRegister}>
                                         Registrieren
                                     </MDBBtn>
                                 </div>

@@ -3,6 +3,7 @@ package de.materna.trainee.date4u.db.services;
 import de.materna.trainee.date4u.db.dto.ProfileDto;
 import de.materna.trainee.date4u.db.dto.QueryRangesDto;
 import de.materna.trainee.date4u.db.dto.mapper.ProfileDtoMapper;
+import de.materna.trainee.date4u.db.entities.Profile;
 import de.materna.trainee.date4u.db.repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,5 +68,10 @@ public class ProfileService {
                 repository.findMinHornlength(),
                 repository.findMaxHornlength()
         );
+    }
+
+    public ProfileDto update(ProfileDto profileDto) {
+        Profile profile = mapper.fromDto(profileDto);
+        return mapper.toDto(repository.save(profile));
     }
 }

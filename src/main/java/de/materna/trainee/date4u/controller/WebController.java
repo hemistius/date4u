@@ -54,6 +54,11 @@ public class WebController {
         return "search";
     }
 
+    @GetMapping("/register")
+    public String getRegister(){
+        return "register";
+    }
+
     @GetMapping("/img/profile/current")
     public String getCurrentProfilePic(Principal principal) {
         Optional<UnicornDto> unicornByMail = unicornService.findUnicornByMail(principal.getName());

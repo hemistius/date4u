@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "./Navbar";
-import {MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBListGroup, MDBListGroupItem, MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBCarouselElement, MDBCarouselCaption, MDBTextArea, MDBInput} from 'mdb-react-ui-kit';
+import {MDBBtn, MDBCarousel, MDBCarouselElement, MDBCarouselInner, MDBCarouselItem, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow, MDBTextArea} from 'mdb-react-ui-kit';
 import "../css/profile.css"
 import "../css/background.css"
 import axios from "axios";
@@ -8,9 +8,11 @@ import axios from "axios";
 function Profile() {
 
     const [profile, setProfile] = useState({photos: []})
+    const [liked, setLiked] = useState(false)
 
     useEffect(() => {
         loadProfile()
+        loadLiked()
     }, [])
 
     const loadProfile = async () => {
@@ -20,14 +22,31 @@ function Profile() {
         setProfile(response.data)
     }
 
+    const loadLiked = async () => {
+        const params = (new URL(document.location)).searchParams;
+        const username = params.get("username")
+        const response = await axios.get("/rest/like", {params: {username: username}})
+        setLiked(response.data.liked)
+    }
+
+    const toggleLiked = async () => {
+        const params = (new URL(document.location)).searchParams;
+        const username = params.get("username")
+        if (liked) {
+            await axios.delete("/rest/like", {params: {username: username}})
+        } else {
+            await axios.put("/rest/like", null,{params: {username: username}})
+        }
+        setLiked(!liked)
+    }
+
     return (<div>
         <Navbar></Navbar>
         <MDBContainer>
             <MDBRow>
                 <MDBCol>
-                    {/*<MDBContainer>*/}
                     <MDBRow className='mb-3 mt-3'>
-                        <MDBCarousel dark  showControls fade interval={999999999}>
+                        <MDBCarousel dark showControls fade interval={999999999}>
                             <MDBCarouselInner>
                                 {profile.photos.map((photo, idx) => (
                                     <MDBCarouselItem key={photo.id} className={photo.profilePhoto ? 'active' : ''}>
@@ -42,20 +61,14 @@ function Profile() {
                             <MDBInput className='mb-4 text-light' placeholder="." disabled readonly label="Nickname" value={profile.nickname}/>
                         </MDBCol>
                     </MDBRow>
-                    <MDBRow className='mb-3'>
-                        <MDBBtn floating><MDBIcon fas icon="thumbs-up"/></MDBBtn>
-                    </MDBRow>
-                    {/*</MDBContainer>*/}
                 </MDBCol>
                 <MDBCol size="9" className="mx-3">
-                    {/*<MDBContainer>*/}
                     <MDBRow className='mb-3 mt-3'>
-                        <h3 className="p-0 text-light">Profil von {profile.nickname}</h3>
+                        <h3 className="p-0 text-light">Profil von {profile.nickname} <MDBBtn onClick={toggleLiked} size="m" style={{backgroundColor: '#ec4a89'}} floating><MDBIcon size="lg" far={!liked} fas={liked} icon="heart"/></MDBBtn></h3>
                     </MDBRow>
                     <MDBRow>
                         <ProfileInfoForm profile={profile}/>
                     </MDBRow>
-                    {/*</MDBContainer>*/}
                 </MDBCol>
             </MDBRow>
         </MDBContainer>

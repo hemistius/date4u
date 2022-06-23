@@ -1,0 +1,17 @@
+html, body, body > div, div.d-flex{
+    height: 100vh;
+}
+
+#genderCol, #preferenceCol, #profilePicCol{
+    text-align: start!important;
+}
+
+#registerCard{
+    width: 50vw;
+    max-width: 50vw;
+}
+
+#logoContainer {
+    width: 100%;
+    height: auto;
+}

@@ -29,7 +29,7 @@ public class Unicorn {
     private Long id;
     private String email;
     private String password;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "PROFILE_FK")
     private Profile profile;
 

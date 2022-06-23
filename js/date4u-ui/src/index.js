@@ -13,5 +13,8 @@ if (document.getElementById('app') != null) {
 } else if (document.getElementById('login') != null) {
     const Login = React.lazy(() => import("./Login"))
     ReactDom.render(<Suspense fallback={<div></div>}><Login/></Suspense>, document.getElementById('login'))
+} else if (document.getElementById('register') != null) {
+    const Register = React.lazy(() => import("./Register"))
+    ReactDom.render(<Suspense fallback={<div></div>}><Register/></Suspense>, document.getElementById('register'))
 }
 
