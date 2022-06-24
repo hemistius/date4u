@@ -1,3 +1,7 @@
 /*html, body, div.d-flex{*/
 /*    height: 75vh;*/
 /*}*/
+
+.uploadResult {
+    display: inline;
+}

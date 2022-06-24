@@ -121,6 +121,7 @@ function ProfileInfoForm(props) {
             <MDBInput className='mb-4 text-light' placeholder="." disabled readonly label="Geburtsdatum" value={props.profile.birthdate}/>
             <MDBInput className='mb-4 text-light' placeholder="." disabled readonly label="Hornlänge" value={props.profile.hornlength + "cm"}/>
             <MDBInput className='mb-4 text-light' disabled readonly label="Geschlecht" value={parseGender(props.profile.gender)}/>
+            <MDBInput className='mb-4 text-light' disabled readonly label="Präferenz" value={parseGender(props.profile.attractedToGender)}/>
             <MDBTextArea className="text-light" placeholder="." label="Beschreibung" disabled readonly rows={4} value={props.profile.description}/>
         </form>
     )

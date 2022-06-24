@@ -13,6 +13,9 @@ public interface UnicornRepository extends PagingAndSortingRepository<Unicorn, L
 
     @EntityGraph(value = "unicorn.all")
     List<Unicorn> findAll();
+    @Override
+    @EntityGraph(value = "unicorn.all")
+    Optional<Unicorn> findById(Long id);
 
     @EntityGraph(value = "unicorn.sparse")
     @Query("from Unicorn u where lower(u.email) = lower(:email) ")
